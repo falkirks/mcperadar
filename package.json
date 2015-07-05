@@ -1,0 +1,44 @@
+{
+  "name": "mcperadar",
+  "version": "0.0.0",
+  "description": "Scan for MCPE clients in local network",
+  "homepage": "https://github.com/Falkirks/MCPERADAR",
+  "author": {
+    "name": "Falkirks",
+    "email": "me@falkirks.com",
+    "url": "http://falkirks.com"
+  },
+  "repository": "Falkirks/mcperadar",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "mcperadar",
+    "mcpe",
+    "udp",
+    "lan"
+  ],
+  "dependencies": {
+    "bytebuffer": "^4.0.0",
+    "meow": "^3.1.0",
+    "portfinder": "^0.4.0"
+  },
+  "devDependencies": {
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-cli": "^1.12.0",
+    "jshint-stylish": "^1.0.1",
+    "load-grunt-tasks": "^3.1.0",
+    "time-grunt": "^1.1.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "bin": {
+    "mcperadar": "cli.js"
+  }
+}
