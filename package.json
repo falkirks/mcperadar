@@ -1,6 +1,6 @@
 {
   "name": "mcperadar",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Scan for MCPE clients in local network",
   "homepage": "https://github.com/Falkirks/MCPERADAR",
   "author": {
