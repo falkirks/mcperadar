@@ -16,10 +16,6 @@ var cli = meow({
 });
 console.log(cli.input); // This is just to pass tests for now
 
-function getClientId(data){
-  return crypto.createHash('md5').update(data.serverId + data.rinfo.address + data.rinfo.port.toString()).digest('hex');
-}
-
 var clients = {};
 
 setInterval(function(){
