@@ -3,9 +3,16 @@ var events = require('events');
 var dgram = require('dgram');
 var ByteBuffer = require('bytebuffer');
 var portfinder = require('portfinder');
+var crypto = require('crypto');
+
 portfinder.basePort = 49152;
 
 var START_TIME = new Date().getTime();
+var CLIENT_TIMEOUT = 1000;
+
+function getClientId(data){
+  return (data.clientId != null ? data.clientId : crypto.createHash('md5').update(data.serverId + data.rinfo.address + data.rinfo.port.toString()).digest('hex'));
+}
 
 var RAKNET = {
   STRUCTURE : 5,
@@ -86,7 +93,8 @@ var MCPERADAR = function(){
         this.client.setBroadcast(true);
     }).bind(this));
     events.EventEmitter.call(this);
-    this.startBroadcast();
+    this.clients = {};
+    this.start();
     this.client.on("message", ((function (msg, rinfo) {
       var buf = new ByteBuffer().append(msg, "hex").flip();
       var id = buf.buffer[0];
@@ -94,7 +102,7 @@ var MCPERADAR = function(){
         case RAKNET.UNCONNECTED_PONG:
           var pong = new UNCONNECTED_PONG(buf);
           pong.decode();
-          this.emit("message", {
+          var client = {
             'rinfo': rinfo,
             'advertise': pong.advertiseString,
             'serverId': pong.serverId,
@@ -103,8 +111,22 @@ var MCPERADAR = function(){
             'version': pong.gameVersion,
             'name': pong.name,
             'currentPlayers': pong.currentPlayers,
-            'maxPlayers': pong.maxPlayers
-          });
+            'maxPlayers': pong.maxPlayers,
+            'ackId': new Date().getTime() - START_TIME,
+            'connected': true
+          };
+          var clientId = getClientId(client);
+          client.clientId = clientId;
+          if(this.clients[clientId] == null){
+            this.emit('discover', client);
+            this.emit('connect', client);
+          }
+          else if(!this.clients[clientId].connected){
+            this.emit('connect', client);
+            this.emit('reconnect', client);
+          }
+          this.clients[clientId] = client;
+          this.emit("message", client);
           break;
         default:
           break;
@@ -115,8 +137,8 @@ var MCPERADAR = function(){
 MCPERADAR.prototype = events.EventEmitter.prototype;
 
 MCPERADAR.prototype.startBroadcast = function(){
-  if(this.intervalId == null) {
-    this.intervalId = setInterval((function () {
+  if(this.broadcastIntervalId == null) {
+    this.broadcastIntervalId = setInterval((function () {
       var ping = new UNCONNECTED_PING(new Date().getTime() - START_TIME);
       ping.encode();
       this.client.send(ping.bb.buffer, 0, ping.bb.buffer.length, 19132, "255.255.255.255");
@@ -124,9 +146,39 @@ MCPERADAR.prototype.startBroadcast = function(){
   }
 };
 MCPERADAR.prototype.stopBroadcast = function(){
-  if(this.intervalId != null) {
-    clearInterval(this.intervalId);
+  if(this.broadcastIntervalId != null) {
+    clearInterval(this.broadcastIntervalId);
   }
+};
+MCPERADAR.prototype.startClientTimeout = function(){
+  if(this.clientTimeoutIntervalId == null) {
+    this.clientTimeoutIntervalId = setInterval((function () {
+      for(var clientId in this.clients){
+        if(this.clients.hasOwnProperty(clientId) && this.clients[clientId] != null && this.clients[clientId].connected){
+          if(this.clients[clientId].ackId+CLIENT_TIMEOUT < new Date().getTime() - START_TIME){
+            this.emit('disconnect', this.clients[clientId]);
+            this.clients[clientId].connected = false;
+          }
+        }
+      }
+    }).bind(this), CLIENT_TIMEOUT);
+  }
+};
+MCPERADAR.prototype.stopClientTimeout = function(){
+  if(this.clientTimeoutIntervalId != null) {
+    clearInterval(this.clientTimeoutIntervalId);
+  }
+};
+MCPERADAR.prototype.start = function(){
+  this.startBroadcast();
+  this.startClientTimeout();
+};
+MCPERADAR.prototype.stop = function () {
+  this.stopBroadcast();
+  this.startClientTimeout();
+};
+MCPERADAR.prototype.getClientById = function(clientId){
+  return this.clients[clientId] || null;
 };
 
 

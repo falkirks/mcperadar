@@ -14,6 +14,7 @@ var cli = meow({
     ''
   ].join('\n')
 });
+console.log(cli.input); // This is just to pass tests for now
 
 function getClientId(data){
   return crypto.createHash('md5').update(data.serverId + data.rinfo.address + data.rinfo.port.toString()).digest('hex');
@@ -34,14 +35,16 @@ setInterval(function(){
   }
 }, 500);
 
-mcperadar.on("message", function(data){
-  //console.log(data.name);
-  data.updateTime = new Date().getTime();
-  var clientId = getClientId(data);
-  if(clients[clientId] === null){
-    if(cli.flags.format === "log") {
-      console.log(clientId + " has been discovered with the name " + data.name);
-    }
-  }
-  clients[getClientId(data)] = data;
+mcperadar.on("connect", function(data){
+  console.log("Connected " + data.clientId);
 });
+mcperadar.on("reconnect", function(data){
+  console.log("Reconnected " + data.clientId);
+});
+mcperadar.on("discover", function(data){
+  console.log("Discovered " + data.clientId);
+});
+mcperadar.on("disconnect", function(data){
+  console.log("Disconnected " + data.clientId);
+});
+
