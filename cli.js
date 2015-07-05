@@ -5,7 +5,6 @@
 //var DELETE_LINE = "\\033[K";
 
 var meow = require('meow');
-var crypto = require('crypto');
 var mcperadar = require('./');
 var cli = meow({
   help: [
