@@ -52,7 +52,7 @@ mcperadar.on('connect', function(data){
 ```
 
 ### Client object
-The client object is emmited to all events. **rinfo** is taken directed from the dgram package. The `pingId` is the time the packet was sent and the `ackId` is the time it was received. Times are relative to `START_TIME`.
+The client object is emmited to all events. **rinfo** is taken directed from the dgram package. The `pingId` is the time the packet was sent and the `ackId` is the time it was received. Times are relative to `START_TIME` and is measured in milliseconds.
 
 ```json
 {
