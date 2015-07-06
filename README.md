@@ -10,7 +10,7 @@ $ npm install --save mcperadar
 ```
 
 
-## Usage
+## Package
 
 ```js
 var mcperadar = require('mcperadar');
@@ -51,6 +51,26 @@ mcperadar.on('connect', function(data){
 });
 ```
 
+### Client object
+The client object is emmited to all events. **rinfo** is taken directed from the dgram package. The `pingId` is the time the packet was sent and the `ackId` is the time it was received. Times are relative to `START_TIME`.
+
+```json
+{
+    'rinfo': { 'address': "192.168.1.22", 'port': 19132 },
+    'advertise': "mcpe;Steve;27;0.11.0;1;5",
+    'serverId': "ID-of-MCPE-installation",
+    'pingId': 1,
+    'game': "mcpe",
+    'version': "0.11.0",
+    'name': "Steve",
+    'currentPlayers': 1,
+    'maxPlayers': 5,
+    'ackId': 25,
+    'connected': true
+}
+```
+
+## CLI
 ```sh
 $ npm install --global mcperadar
 $ mcperadar --help
