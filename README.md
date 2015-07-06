@@ -1,6 +1,6 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-Scan for MCPE servers in local network.
+Scan for Minecraft Pocket Edition (MCPE) servers in local network. This includes vanilla MCPE clients and PocketMine servers.
 
 > This library allows you to find MCPE **servers** on your local network. These "servers" may be referred to as "clients", as they are clients on the mcperadar application. This might be a bit confusing.
 
