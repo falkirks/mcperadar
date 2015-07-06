@@ -56,17 +56,17 @@ The client object is emmited to all events. **rinfo** is taken directed from the
 
 ```json
 {
-    'rinfo': { 'address': "192.168.1.22", 'port': 19132 },
-    'advertise': "mcpe;Steve;27;0.11.0;1;5",
-    'serverId': "ID-of-MCPE-installation",
-    'pingId': 1,
-    'game': "mcpe",
-    'version': "0.11.0",
-    'name': "Steve",
-    'currentPlayers': 1,
-    'maxPlayers': 5,
-    'ackId': 25,
-    'connected': true
+    rinfo: { address: "192.168.1.22", port: 19132 },
+    advertise: "mcpe;Steve;27;0.11.0;1;5",
+    serverId: "ID-of-MCPE-installation",
+    pingId: 1,
+    game: "mcpe",
+    version: "0.11.0",
+    name: "Steve",
+    currentPlayers: 1,
+    maxPlayers: 5,
+    ackId: 25,
+    connected: true
 }
 ```
 
