@@ -2,6 +2,8 @@
 
 > Scan for MCPE servers in local network
 
+This library allows you to find MCPE **servers** on your local network. These "servers" may be referred to as "clients", as they are clients on the mcperadar application. This might be a bit confusing.
+
 
 ## Install
 
@@ -71,6 +73,9 @@ The client object is emmited to all events. **rinfo** is taken directly from the
     connected: true
 }
 ```
+
+### Client IDs
+Client IDs identify each client internally and help determine which session a PONG packet belongs to. The ID is formed using an MD5 hash of the server id (as sent in the PONG packet), the client IP and the client port. This means that if the client's name changes, it will still have the same ID internally. 
 
 ## CLI
 The CLI is a work in progress. As of writing, it is able to print out API events as they happen. Eventually, it should have the ability to list clients out in a pretty table and update them as events come in.
