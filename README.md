@@ -1,6 +1,6 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-> Scan for MCPE clients in local network
+> Scan for MCPE servers in local network
 
 
 ## Install
