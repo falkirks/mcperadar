@@ -21,6 +21,7 @@ var mcperadar = require('mcperadar');
 mcperadar.on('message', function(data){
   console.log(data);
 });
+
 //
 // Called when a new client is discovered. A new client is a client whose clientId hasn't appeared in the current instance.
 //
@@ -42,6 +43,7 @@ mcperadar.on('disconnect', function(data){
 mcperadar.on('reconnect', function(data){
   console.log(data);
 });
+
 //
 // Called anytime a client opens a connection (ie: marked as connected). 
 // This included 'discover' and 'reconnect'
