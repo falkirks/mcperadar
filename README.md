@@ -2,7 +2,7 @@
 
 > Scan for MCPE servers in local network
 
-This library allows you to find MCPE **servers** on your local network. These "servers" may be referred to as "clients", as they are clients on the mcperadar application. This might be a bit confusing.
+> This library allows you to find MCPE **servers** on your local network. These "servers" may be referred to as "clients", as they are clients on the mcperadar application. This might be a bit confusing.
 
 
 ## Install
