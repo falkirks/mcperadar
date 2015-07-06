@@ -73,6 +73,8 @@ The client object is emmited to all events. **rinfo** is taken directly from the
 ```
 
 ## CLI
+The CLI is a work in progress. As of writing, it is able to print out API events as they happen. Eventually, it should have the ability to list clients out in a pretty table and update them as events come in.
+
 ```sh
 $ npm install --global mcperadar
 $ mcperadar --help
